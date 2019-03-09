@@ -3974,6 +3974,9 @@
                                       "subunit_to_unit": {
                                         "type": "integer"
                                       },
+                                      "avatar": {
+                                        "type": "object"
+                                      },
                                       "created_at": {
                                         "type": "string",
                                         "format": "date-time"
@@ -3998,6 +4001,7 @@
                                       "symbol",
                                       "name",
                                       "subunit_to_unit",
+                                      "avatar",
                                       "created_at",
                                       "updated_at",
                                       "enabled"
@@ -4021,6 +4025,9 @@
                               "subunit_to_unit": 100,
                               "created_at": "2018-01-01T00:00:00Z",
                               "updated_at": "2018-01-01T10:00:00Z",
+                              "avatar": {
+                                "original": "file_url"
+                              },
                               "enabled": true,
                               "metadata": {},
                               "encrypted_metadata": {}
@@ -4216,6 +4223,9 @@
                             "subunit_to_unit": {
                               "type": "integer"
                             },
+                            "avatar": {
+                              "type": "object"
+                            },
                             "created_at": {
                               "type": "string",
                               "format": "date-time"
@@ -4240,6 +4250,7 @@
                             "symbol",
                             "name",
                             "subunit_to_unit",
+                            "avatar",
                             "created_at",
                             "updated_at",
                             "enabled"
@@ -4256,6 +4267,9 @@
                           "created_at": "2018-01-01T00:00:00Z",
                           "updated_at": "2018-01-01T10:00:00Z",
                           "enabled": true,
+                          "avatar": {
+                            "original": "file_url"
+                          },
                           "metadata": {},
                           "encrypted_metadata": {}
                         }
@@ -4495,6 +4509,9 @@
                             "subunit_to_unit": {
                               "type": "integer"
                             },
+                            "avatar": {
+                              "type": "object"
+                            },
                             "created_at": {
                               "type": "string",
                               "format": "date-time"
@@ -4519,6 +4536,7 @@
                             "symbol",
                             "name",
                             "subunit_to_unit",
+                            "avatar",
                             "created_at",
                             "updated_at",
                             "enabled"
@@ -4535,6 +4553,9 @@
                           "created_at": "2018-01-01T00:00:00Z",
                           "updated_at": "2018-01-01T10:00:00Z",
                           "enabled": true,
+                          "avatar": {
+                            "original": "file_url"
+                          },
                           "metadata": {},
                           "encrypted_metadata": {}
                         }
@@ -4758,6 +4779,9 @@
                             "subunit_to_unit": {
                               "type": "integer"
                             },
+                            "avatar": {
+                              "type": "object"
+                            },
                             "created_at": {
                               "type": "string",
                               "format": "date-time"
@@ -4782,6 +4806,7 @@
                             "symbol",
                             "name",
                             "subunit_to_unit",
+                            "avatar",
                             "created_at",
                             "updated_at",
                             "enabled"
@@ -4798,6 +4823,254 @@
                           "created_at": "2018-01-01T00:00:00Z",
                           "updated_at": "2018-01-01T10:00:00Z",
                           "enabled": true,
+                          "avatar": {
+                            "original": "file_url"
+                          },
+                          "metadata": {},
+                          "encrypted_metadata": {}
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Returns an internal server error",
+            "content": {
+              "application/vnd.omisego.v1+json": {
+                "schema": {
+                  "description": "The response schema for an error",
+                  "allOf": [
+                    {
+                      "description": "The response schema for a successful operation",
+                      "type": "object",
+                      "properties": {
+                        "version": {
+                          "type": "string"
+                        },
+                        "success": {
+                          "type": "boolean"
+                        },
+                        "data": {
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "version",
+                        "success",
+                        "data"
+                      ],
+                      "example": {
+                        "version": "1",
+                        "success": true,
+                        "data": {}
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "description": "The object schema for an error",
+                          "type": "object",
+                          "properties": {
+                            "object": {
+                              "type": "string"
+                            },
+                            "code": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "messages": {
+                              "type": "object"
+                            }
+                          },
+                          "required": [
+                            "object",
+                            "code",
+                            "description",
+                            "messages"
+                          ],
+                          "example": {
+                            "object": "error",
+                            "code": "server:internal_server_error",
+                            "description": "Something went wrong on the server",
+                            "messages": {
+                              "error_key": "error_reason"
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "data"
+                      ],
+                      "example": {
+                        "success": false,
+                        "data": {
+                          "object": "error",
+                          "code": "server:internal_server_error",
+                          "description": "Something went wrong on the server",
+                          "messages": {
+                            "error_key": "error_reason"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token.upload_avatar": {
+      "post": {
+        "tags": [
+          "Token"
+        ],
+        "summary": "Uploads avatar for a token",
+        "operationId": "token_upload_avatar",
+        "security": [
+          {
+            "ProviderAuth": []
+          },
+          {
+            "AdminAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "The parameters to use for uploading a oken's avatar. Only supports .jpg, .jpeg, .gif and .png.",
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "id",
+                  "avatar"
+                ],
+                "example": {
+                  "id": "tok_ABC_01ce846km1syzwezxfmgdn7dt7",
+                  "avatar": "/path/to/file"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns a single tokens",
+            "content": {
+              "application/vnd.omisego.v1+json": {
+                "schema": {
+                  "description": "The response schema for a token",
+                  "allOf": [
+                    {
+                      "description": "The response schema for a successful operation",
+                      "type": "object",
+                      "properties": {
+                        "version": {
+                          "type": "string"
+                        },
+                        "success": {
+                          "type": "boolean"
+                        },
+                        "data": {
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "version",
+                        "success",
+                        "data"
+                      ],
+                      "example": {
+                        "version": "1",
+                        "success": true,
+                        "data": {}
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "object",
+                          "description": "The object schema for a token",
+                          "properties": {
+                            "object": {
+                              "type": "string"
+                            },
+                            "id": {
+                              "type": "string"
+                            },
+                            "symbol": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "subunit_to_unit": {
+                              "type": "integer"
+                            },
+                            "avatar": {
+                              "type": "object"
+                            },
+                            "created_at": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "updated_at": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "metadata": {
+                              "type": "object"
+                            },
+                            "encrypted_metadata": {
+                              "type": "object"
+                            },
+                            "enabled": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "object",
+                            "id",
+                            "symbol",
+                            "name",
+                            "subunit_to_unit",
+                            "avatar",
+                            "created_at",
+                            "updated_at",
+                            "enabled"
+                          ]
+                        }
+                      },
+                      "example": {
+                        "data": {
+                          "object": "token",
+                          "id": "tok_abc_01cbfge9qhmsdbjyb7a8e8pxt3",
+                          "symbol": "ABC",
+                          "name": "ABC Point",
+                          "subunit_to_unit": 100,
+                          "created_at": "2018-01-01T00:00:00Z",
+                          "updated_at": "2018-01-01T10:00:00Z",
+                          "enabled": true,
+                          "avatar": {
+                            "original": "file_url"
+                          },
                           "metadata": {},
                           "encrypted_metadata": {}
                         }
@@ -4995,6 +5268,9 @@
                             "subunit_to_unit": {
                               "type": "integer"
                             },
+                            "avatar": {
+                              "type": "object"
+                            },
                             "created_at": {
                               "type": "string",
                               "format": "date-time"
@@ -5019,6 +5295,7 @@
                             "symbol",
                             "name",
                             "subunit_to_unit",
+                            "avatar",
                             "created_at",
                             "updated_at",
                             "enabled"
@@ -5035,6 +5312,9 @@
                           "created_at": "2018-01-01T00:00:00Z",
                           "updated_at": "2018-01-01T10:00:00Z",
                           "enabled": true,
+                          "avatar": {
+                            "original": "file_url"
+                          },
                           "metadata": {},
                           "encrypted_metadata": {}
                         }
@@ -5206,6 +5486,9 @@
                         "subunit_to_unit": {
                           "type": "integer"
                         },
+                        "avatar": {
+                          "type": "object"
+                        },
                         "created_at": {
                           "type": "string",
                           "format": "date-time"
@@ -5230,6 +5513,7 @@
                         "symbol",
                         "name",
                         "subunit_to_unit",
+                        "avatar",
                         "created_at",
                         "updated_at",
                         "enabled"
@@ -5641,6 +5925,9 @@
                                           "subunit_to_unit": {
                                             "type": "integer"
                                           },
+                                          "avatar": {
+                                            "type": "object"
+                                          },
                                           "created_at": {
                                             "type": "string",
                                             "format": "date-time"
@@ -5665,6 +5952,7 @@
                                           "symbol",
                                           "name",
                                           "subunit_to_unit",
+                                          "avatar",
                                           "created_at",
                                           "updated_at",
                                           "enabled"
@@ -5941,6 +6229,9 @@
                                                   "subunit_to_unit": {
                                                     "type": "integer"
                                                   },
+                                                  "avatar": {
+                                                    "type": "object"
+                                                  },
                                                   "created_at": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -5965,6 +6256,7 @@
                                                   "symbol",
                                                   "name",
                                                   "subunit_to_unit",
+                                                  "avatar",
                                                   "created_at",
                                                   "updated_at",
                                                   "enabled"
@@ -6003,6 +6295,9 @@
                                                   "subunit_to_unit": {
                                                     "type": "integer"
                                                   },
+                                                  "avatar": {
+                                                    "type": "object"
+                                                  },
                                                   "created_at": {
                                                     "type": "string",
                                                     "format": "date-time"
@@ -6027,6 +6322,7 @@
                                                   "symbol",
                                                   "name",
                                                   "subunit_to_unit",
+                                                  "avatar",
                                                   "created_at",
                                                   "updated_at",
                                                   "enabled"
@@ -6326,6 +6622,9 @@
                             "subunit_to_unit": {
                               "type": "integer"
                             },
+                            "avatar": {
+                              "type": "object"
+                            },
                             "created_at": {
                               "type": "string",
                               "format": "date-time"
@@ -6350,6 +6649,7 @@
                             "symbol",
                             "name",
                             "subunit_to_unit",
+                            "avatar",
                             "created_at",
                             "updated_at",
                             "enabled"
@@ -6734,6 +7034,9 @@
                                           "subunit_to_unit": {
                                             "type": "integer"
                                           },
+                                          "avatar": {
+                                            "type": "object"
+                                          },
                                           "created_at": {
                                             "type": "string",
                                             "format": "date-time"
@@ -6758,6 +7061,7 @@
                                           "symbol",
                                           "name",
                                           "subunit_to_unit",
+                                          "avatar",
                                           "created_at",
                                           "updated_at",
                                           "enabled"
@@ -6785,6 +7089,9 @@
                                           "subunit_to_unit": {
                                             "type": "integer"
                                           },
+                                          "avatar": {
+                                            "type": "object"
+                                          },
                                           "created_at": {
                                             "type": "string",
                                             "format": "date-time"
@@ -6809,6 +7116,7 @@
                                           "symbol",
                                           "name",
                                           "subunit_to_unit",
+                                          "avatar",
                                           "created_at",
                                           "updated_at",
                                           "enabled"
@@ -7090,6 +7398,9 @@
                                 "subunit_to_unit": {
                                   "type": "integer"
                                 },
+                                "avatar": {
+                                  "type": "object"
+                                },
                                 "created_at": {
                                   "type": "string",
                                   "format": "date-time"
@@ -7114,6 +7425,7 @@
                                 "symbol",
                                 "name",
                                 "subunit_to_unit",
+                                "avatar",
                                 "created_at",
                                 "updated_at",
                                 "enabled"
@@ -7141,6 +7453,9 @@
                                 "subunit_to_unit": {
                                   "type": "integer"
                                 },
+                                "avatar": {
+                                  "type": "object"
+                                },
                                 "created_at": {
                                   "type": "string",
                                   "format": "date-time"
@@ -7165,6 +7480,7 @@
                                 "symbol",
                                 "name",
                                 "subunit_to_unit",
+                                "avatar",
                                 "created_at",
                                 "updated_at",
                                 "enabled"
@@ -7539,6 +7855,9 @@
                                           "subunit_to_unit": {
                                             "type": "integer"
                                           },
+                                          "avatar": {
+                                            "type": "object"
+                                          },
                                           "created_at": {
                                             "type": "string",
                                             "format": "date-time"
@@ -7563,6 +7882,7 @@
                                           "symbol",
                                           "name",
                                           "subunit_to_unit",
+                                          "avatar",
                                           "created_at",
                                           "updated_at",
                                           "enabled"
@@ -7590,6 +7910,9 @@
                                           "subunit_to_unit": {
                                             "type": "integer"
                                           },
+                                          "avatar": {
+                                            "type": "object"
+                                          },
                                           "created_at": {
                                             "type": "string",
                                             "format": "date-time"
@@ -7614,6 +7937,7 @@
                                           "symbol",
                                           "name",
                                           "subunit_to_unit",
+                                          "avatar",
                                           "created_at",
                                           "updated_at",
                                           "enabled"
@@ -7988,6 +8312,9 @@
                                           "subunit_to_unit": {
                                             "type": "integer"
                                           },
+                                          "avatar": {
+                                            "type": "object"
+                                          },
                                           "created_at": {
                                             "type": "string",
                                             "format": "date-time"
@@ -8012,6 +8339,7 @@
                                           "symbol",
                                           "name",
                                           "subunit_to_unit",
+                                          "avatar",
                                           "created_at",
                                           "updated_at",
                                           "enabled"
@@ -8039,6 +8367,9 @@
                                           "subunit_to_unit": {
                                             "type": "integer"
                                           },
+                                          "avatar": {
+                                            "type": "object"
+                                          },
                                           "created_at": {
                                             "type": "string",
                                             "format": "date-time"
@@ -8063,6 +8394,7 @@
                                           "symbol",
                                           "name",
                                           "subunit_to_unit",
+                                          "avatar",
                                           "created_at",
                                           "updated_at",
                                           "enabled"
@@ -8433,6 +8765,9 @@
                                           "subunit_to_unit": {
                                             "type": "integer"
                                           },
+                                          "avatar": {
+                                            "type": "object"
+                                          },
                                           "created_at": {
                                             "type": "string",
                                             "format": "date-time"
@@ -8457,6 +8792,7 @@
                                           "symbol",
                                           "name",
                                           "subunit_to_unit",
+                                          "avatar",
                                           "created_at",
                                           "updated_at",
                                           "enabled"
@@ -8484,6 +8820,9 @@
                                           "subunit_to_unit": {
                                             "type": "integer"
                                           },
+                                          "avatar": {
+                                            "type": "object"
+                                          },
                                           "created_at": {
                                             "type": "string",
                                             "format": "date-time"
@@ -8508,6 +8847,7 @@
                                           "symbol",
                                           "name",
                                           "subunit_to_unit",
+                                          "avatar",
                                           "created_at",
                                           "updated_at",
                                           "enabled"
@@ -15342,6 +15682,9 @@
                                                 "subunit_to_unit": {
                                                   "type": "integer"
                                                 },
+                                                "avatar": {
+                                                  "type": "object"
+                                                },
                                                 "created_at": {
                                                   "type": "string",
                                                   "format": "date-time"
@@ -15366,6 +15709,7 @@
                                                 "symbol",
                                                 "name",
                                                 "subunit_to_unit",
+                                                "avatar",
                                                 "created_at",
                                                 "updated_at",
                                                 "enabled"
@@ -16120,6 +16464,9 @@
                                                 "subunit_to_unit": {
                                                   "type": "integer"
                                                 },
+                                                "avatar": {
+                                                  "type": "object"
+                                                },
                                                 "created_at": {
                                                   "type": "string",
                                                   "format": "date-time"
@@ -16144,6 +16491,7 @@
                                                 "symbol",
                                                 "name",
                                                 "subunit_to_unit",
+                                                "avatar",
                                                 "created_at",
                                                 "updated_at",
                                                 "enabled"
@@ -16599,6 +16947,9 @@
                                               "subunit_to_unit": {
                                                 "type": "integer"
                                               },
+                                              "avatar": {
+                                                "type": "object"
+                                              },
                                               "created_at": {
                                                 "type": "string",
                                                 "format": "date-time"
@@ -16623,6 +16974,7 @@
                                               "symbol",
                                               "name",
                                               "subunit_to_unit",
+                                              "avatar",
                                               "created_at",
                                               "updated_at",
                                               "enabled"
@@ -16661,6 +17013,9 @@
                                               "subunit_to_unit": {
                                                 "type": "integer"
                                               },
+                                              "avatar": {
+                                                "type": "object"
+                                              },
                                               "created_at": {
                                                 "type": "string",
                                                 "format": "date-time"
@@ -16685,6 +17040,7 @@
                                               "symbol",
                                               "name",
                                               "subunit_to_unit",
+                                              "avatar",
                                               "created_at",
                                               "updated_at",
                                               "enabled"
@@ -23660,6 +24016,9 @@
                                                 "subunit_to_unit": {
                                                   "type": "integer"
                                                 },
+                                                "avatar": {
+                                                  "type": "object"
+                                                },
                                                 "created_at": {
                                                   "type": "string",
                                                   "format": "date-time"
@@ -23684,6 +24043,7 @@
                                                 "symbol",
                                                 "name",
                                                 "subunit_to_unit",
+                                                "avatar",
                                                 "created_at",
                                                 "updated_at",
                                                 "enabled"
@@ -24147,6 +24507,9 @@
                                               "subunit_to_unit": {
                                                 "type": "integer"
                                               },
+                                              "avatar": {
+                                                "type": "object"
+                                              },
                                               "created_at": {
                                                 "type": "string",
                                                 "format": "date-time"
@@ -24171,6 +24534,7 @@
                                               "symbol",
                                               "name",
                                               "subunit_to_unit",
+                                              "avatar",
                                               "created_at",
                                               "updated_at",
                                               "enabled"
@@ -24209,6 +24573,9 @@
                                               "subunit_to_unit": {
                                                 "type": "integer"
                                               },
+                                              "avatar": {
+                                                "type": "object"
+                                              },
                                               "created_at": {
                                                 "type": "string",
                                                 "format": "date-time"
@@ -24233,6 +24600,7 @@
                                               "symbol",
                                               "name",
                                               "subunit_to_unit",
+                                              "avatar",
                                               "created_at",
                                               "updated_at",
                                               "enabled"
@@ -25801,6 +26169,9 @@
                                                 "subunit_to_unit": {
                                                   "type": "integer"
                                                 },
+                                                "avatar": {
+                                                  "type": "object"
+                                                },
                                                 "created_at": {
                                                   "type": "string",
                                                   "format": "date-time"
@@ -25825,6 +26196,7 @@
                                                 "symbol",
                                                 "name",
                                                 "subunit_to_unit",
+                                                "avatar",
                                                 "created_at",
                                                 "updated_at",
                                                 "enabled"
@@ -26468,6 +26840,9 @@
                                       "subunit_to_unit": {
                                         "type": "integer"
                                       },
+                                      "avatar": {
+                                        "type": "object"
+                                      },
                                       "created_at": {
                                         "type": "string",
                                         "format": "date-time"
@@ -26492,6 +26867,7 @@
                                       "symbol",
                                       "name",
                                       "subunit_to_unit",
+                                      "avatar",
                                       "created_at",
                                       "updated_at",
                                       "enabled"
@@ -27063,6 +27439,9 @@
                                       "subunit_to_unit": {
                                         "type": "integer"
                                       },
+                                      "avatar": {
+                                        "type": "object"
+                                      },
                                       "created_at": {
                                         "type": "string",
                                         "format": "date-time"
@@ -27087,6 +27466,7 @@
                                       "symbol",
                                       "name",
                                       "subunit_to_unit",
+                                      "avatar",
                                       "created_at",
                                       "updated_at",
                                       "enabled"
@@ -28171,6 +28551,9 @@
                                       "subunit_to_unit": {
                                         "type": "integer"
                                       },
+                                      "avatar": {
+                                        "type": "object"
+                                      },
                                       "created_at": {
                                         "type": "string",
                                         "format": "date-time"
@@ -28195,6 +28578,7 @@
                                       "symbol",
                                       "name",
                                       "subunit_to_unit",
+                                      "avatar",
                                       "created_at",
                                       "updated_at",
                                       "enabled"
@@ -28624,6 +29008,9 @@
                                               "subunit_to_unit": {
                                                 "type": "integer"
                                               },
+                                              "avatar": {
+                                                "type": "object"
+                                              },
                                               "created_at": {
                                                 "type": "string",
                                                 "format": "date-time"
@@ -28648,6 +29035,7 @@
                                               "symbol",
                                               "name",
                                               "subunit_to_unit",
+                                              "avatar",
                                               "created_at",
                                               "updated_at",
                                               "enabled"
@@ -28686,6 +29074,9 @@
                                               "subunit_to_unit": {
                                                 "type": "integer"
                                               },
+                                              "avatar": {
+                                                "type": "object"
+                                              },
                                               "created_at": {
                                                 "type": "string",
                                                 "format": "date-time"
@@ -28710,6 +29101,7 @@
                                               "symbol",
                                               "name",
                                               "subunit_to_unit",
+                                              "avatar",
                                               "created_at",
                                               "updated_at",
                                               "enabled"
@@ -29340,6 +29732,9 @@
                                     "subunit_to_unit": {
                                       "type": "integer"
                                     },
+                                    "avatar": {
+                                      "type": "object"
+                                    },
                                     "created_at": {
                                       "type": "string",
                                       "format": "date-time"
@@ -29364,6 +29759,7 @@
                                     "symbol",
                                     "name",
                                     "subunit_to_unit",
+                                    "avatar",
                                     "created_at",
                                     "updated_at",
                                     "enabled"
@@ -29402,6 +29798,9 @@
                                     "subunit_to_unit": {
                                       "type": "integer"
                                     },
+                                    "avatar": {
+                                      "type": "object"
+                                    },
                                     "created_at": {
                                       "type": "string",
                                       "format": "date-time"
@@ -29426,6 +29825,7 @@
                                     "symbol",
                                     "name",
                                     "subunit_to_unit",
+                                    "avatar",
                                     "created_at",
                                     "updated_at",
                                     "enabled"
@@ -29806,6 +30206,9 @@
                                     "subunit_to_unit": {
                                       "type": "integer"
                                     },
+                                    "avatar": {
+                                      "type": "object"
+                                    },
                                     "created_at": {
                                       "type": "string",
                                       "format": "date-time"
@@ -29830,6 +30233,7 @@
                                     "symbol",
                                     "name",
                                     "subunit_to_unit",
+                                    "avatar",
                                     "created_at",
                                     "updated_at",
                                     "enabled"
@@ -29868,6 +30272,9 @@
                                     "subunit_to_unit": {
                                       "type": "integer"
                                     },
+                                    "avatar": {
+                                      "type": "object"
+                                    },
                                     "created_at": {
                                       "type": "string",
                                       "format": "date-time"
@@ -29892,6 +30299,7 @@
                                     "symbol",
                                     "name",
                                     "subunit_to_unit",
+                                    "avatar",
                                     "created_at",
                                     "updated_at",
                                     "enabled"
@@ -30231,6 +30639,9 @@
                                     "subunit_to_unit": {
                                       "type": "integer"
                                     },
+                                    "avatar": {
+                                      "type": "object"
+                                    },
                                     "created_at": {
                                       "type": "string",
                                       "format": "date-time"
@@ -30255,6 +30666,7 @@
                                     "symbol",
                                     "name",
                                     "subunit_to_unit",
+                                    "avatar",
                                     "created_at",
                                     "updated_at",
                                     "enabled"
@@ -30282,6 +30694,9 @@
                                     "subunit_to_unit": {
                                       "type": "integer"
                                     },
+                                    "avatar": {
+                                      "type": "object"
+                                    },
                                     "created_at": {
                                       "type": "string",
                                       "format": "date-time"
@@ -30306,6 +30721,7 @@
                                     "symbol",
                                     "name",
                                     "subunit_to_unit",
+                                    "avatar",
                                     "created_at",
                                     "updated_at",
                                     "enabled"

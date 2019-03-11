@@ -46,7 +46,7 @@ defmodule ActivityLogger.MixProject do
       {:ex_machina, "~> 2.2", only: :test},
       {:jason, "~> 1.1"},
       {:postgrex, ">= 0.0.0"},
-      {:utils, in_umbrella: true}
+      {:utils, in_umbrella: true},
     ]
   end
 

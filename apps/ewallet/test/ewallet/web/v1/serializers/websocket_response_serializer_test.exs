@@ -53,7 +53,7 @@ defmodule EWallet.Web.V1.WebsocketResponseSerializerTest do
       }
 
       {:socket_push, :text, encoded} = WebsocketResponseSerializer.encode!(msg)
-      decoded = Poison.decode!(encoded)
+      decoded = Jason.decode!(encoded)
 
       assert decoded == %{
                "data" => %{},
@@ -80,7 +80,7 @@ defmodule EWallet.Web.V1.WebsocketResponseSerializerTest do
       }
 
       {:socket_push, :text, encoded} = WebsocketResponseSerializer.encode!(msg)
-      decoded = Poison.decode!(encoded)
+      decoded = Jason.decode!(encoded)
 
       assert decoded == %{
                "data" => %{},
@@ -98,7 +98,7 @@ defmodule EWallet.Web.V1.WebsocketResponseSerializerTest do
     test "encodes phx_reply succesfully" do
       reply = %Reply{ref: 1, topic: "topic", status: :ok, payload: %{data: %{}}}
       {:socket_push, :text, encoded} = WebsocketResponseSerializer.encode!(reply)
-      decoded = Poison.decode!(encoded)
+      decoded = Jason.decode!(encoded)
 
       assert decoded == %{
                "data" => %{},
@@ -114,7 +114,7 @@ defmodule EWallet.Web.V1.WebsocketResponseSerializerTest do
     test "encodes phx_reply with reason" do
       reply = %Reply{ref: 1, topic: "topic", status: :error, payload: %{reason: "something"}}
       {:socket_push, :text, encoded} = WebsocketResponseSerializer.encode!(reply)
-      decoded = Poison.decode!(encoded)
+      decoded = Jason.decode!(encoded)
 
       assert decoded == %{
                "data" => nil,
@@ -136,7 +136,7 @@ defmodule EWallet.Web.V1.WebsocketResponseSerializerTest do
       reply = %Reply{ref: 1, topic: "topic", status: :error, payload: :forbidden_channel}
 
       {:socket_push, :text, encoded} = WebsocketResponseSerializer.encode!(reply)
-      decoded = Poison.decode!(encoded)
+      decoded = Jason.decode!(encoded)
 
       assert decoded == %{
                "data" => nil,
@@ -157,7 +157,7 @@ defmodule EWallet.Web.V1.WebsocketResponseSerializerTest do
     test "encodes phx_reply with empty payload" do
       reply = %Reply{ref: 1, topic: "topic", status: :ok, payload: %{}}
       {:socket_push, :text, encoded} = WebsocketResponseSerializer.encode!(reply)
-      decoded = Poison.decode!(encoded)
+      decoded = Jason.decode!(encoded)
 
       assert decoded == %{
                "data" => nil,

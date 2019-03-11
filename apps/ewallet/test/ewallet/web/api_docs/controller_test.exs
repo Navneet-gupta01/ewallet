@@ -110,7 +110,7 @@ defmodule EWallet.Web.APIDocs.ControllerTest do
 
       refute conn.halted
       assert conn.status == 200
-      response = Poison.decode!(conn.resp_body)
+      response = Jason.decode!(conn.resp_body)
 
       Enum.each(response, fn {_k, v} ->
         assert Map.has_key?(v, "code") &&

@@ -48,7 +48,7 @@ defmodule EWalletConfig.MixProject do
       {:deferred_config, "~> 0.1.0"},
       {:ecto_sql, "~> 3.0"},
       {:plug, "~> 1.0"},
-      {:poison, "~> 3.1"},
+      {:jason, "~> 1.1"},
       {:postgrex, ">= 0.0.0"},
       {:utils, in_umbrella: true},
 

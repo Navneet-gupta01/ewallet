@@ -142,7 +142,7 @@ defmodule EWalletConfig.FileStorageSettingsLoaderTest do
       assert Application.get_env(:arc, :storage) == Arc.Storage.GCS
       assert Application.get_env(:arc, :bucket) == "bucket"
 
-      assert Application.get_env(:goth, :json) |> Poison.decode!() == %{
+      assert Application.get_env(:goth, :json) |> Jason.decode!() == %{
                "type" => "service_account",
                "project_id" => "ewallet",
                "private_key_id" => "private_key_id",

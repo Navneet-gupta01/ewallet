@@ -40,7 +40,7 @@ defmodule LocalLedgerDB.Mixfile do
       {:ecto_sql, "~> 3.0"},
       {:ewallet_config, in_umbrella: true},
       {:ex_machina, "~> 2.2", only: :test},
-      {:poison, "~> 3.1"},
+      {:jason, "~> 1.1"},
       {:postgrex, ">= 0.0.0"}
     ]
   end

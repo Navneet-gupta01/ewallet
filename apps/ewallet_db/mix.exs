@@ -54,7 +54,7 @@ defmodule EWalletDB.Mixfile do
       {:ewallet_config, in_umbrella: true},
       {:ex_machina, "~> 2.2", only: :test},
       {:plug, "~> 1.0"},
-      {:poison, "~> 3.1"},
+      {:jason, "~> 1.1"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
     ]

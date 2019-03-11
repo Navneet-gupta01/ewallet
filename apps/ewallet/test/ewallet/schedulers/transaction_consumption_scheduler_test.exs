@@ -65,7 +65,7 @@ defmodule EWallet.TransactionConsumptionSchedulerTest do
             payload: event.payload
           })
 
-        decoded = Poison.decode!(encoded)
+        decoded = Jason.decode!(encoded)
         assert decoded["success"] == false
         assert decoded["event"] == "transaction_consumption_finalized"
         assert decoded["error"]["code"] == "transaction_consumption:expired"

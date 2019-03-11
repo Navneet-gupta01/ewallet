@@ -16,7 +16,6 @@ defmodule AdminAPI.V1.ErrorHandlerTest do
   use AdminAPI.ConnCase, async: true
   import Ecto.Changeset
   alias AdminAPI.V1.ErrorHandler
-  alias Poison.Parser
 
   defmodule TestSchema do
     use Ecto.Schema
@@ -103,6 +102,6 @@ defmodule AdminAPI.V1.ErrorHandlerTest do
   defp parse_body(conn) do
     conn
     |> Map.get(:resp_body)
-    |> Parser.parse()
+    |> Jason.decode()
   end
 end

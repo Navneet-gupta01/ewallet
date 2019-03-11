@@ -101,7 +101,7 @@ defmodule EWallet.Web.V1.CSV.TransactionSerializer do
   def serialize(%NotLoaded{}), do: nil
   def serialize(nil), do: nil
 
-  defp format(value) when is_map(value), do: Poison.encode!(value)
+  defp format(value) when is_map(value), do: Jason.encode!(value)
   defp format(value), do: value
 
   defp build_error(%Transaction{error_code: nil}), do: nil

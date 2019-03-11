@@ -44,9 +44,9 @@ defmodule ActivityLogger.MixProject do
       {:deferred_config, "~> 0.1.0"},
       {:ecto_sql, "~> 3.0"},
       {:ex_machina, "~> 2.2", only: :test},
-      {:poison, "~> 3.1"},
+      {:jason, "~> 1.1"},
       {:postgrex, ">= 0.0.0"},
-      {:utils, in_umbrella: true},
+      {:utils, in_umbrella: true}
     ]
   end
 

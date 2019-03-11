@@ -17,7 +17,6 @@ defmodule EWalletAPI.V1.ErrorHandlerTest do
   use EWalletAPI.ConnCase, async: true
   import Ecto.Changeset
   alias EWalletAPI.V1.ErrorHandler
-  alias Poison.Parser
 
   defmodule TestSchema do
     use Ecto.Schema
@@ -106,6 +105,6 @@ defmodule EWalletAPI.V1.ErrorHandlerTest do
   defp parse_body(conn) do
     conn
     |> Map.get(:resp_body)
-    |> Parser.parse()
+    |> Jason.decode()
   end
 end

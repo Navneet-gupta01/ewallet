@@ -1968,7 +1968,7 @@ defmodule AdminAPI.V1.TransactionConsumptionControllerTest do
           payload: payload
         })
 
-      decoded = Poison.decode!(encoded)
+      decoded = Jason.decode!(encoded)
       assert decoded["success"] == false
       assert decoded["error"]["code"] == "transaction_consumption:expired"
 
@@ -1986,7 +1986,7 @@ defmodule AdminAPI.V1.TransactionConsumptionControllerTest do
           payload: payload
         })
 
-      decoded = Poison.decode!(encoded)
+      decoded = Jason.decode!(encoded)
       assert decoded["success"] == false
       assert decoded["error"]["code"] == "transaction_consumption:expired"
 
@@ -2059,7 +2059,7 @@ defmodule AdminAPI.V1.TransactionConsumptionControllerTest do
           payload: payload
         })
 
-      decoded = Poison.decode!(encoded)
+      decoded = Jason.decode!(encoded)
       assert decoded["success"] == true
 
       # We need to know once the consumption has been approved, so let's
@@ -2088,7 +2088,7 @@ defmodule AdminAPI.V1.TransactionConsumptionControllerTest do
           payload: payload
         })
 
-      decoded = Poison.decode!(encoded)
+      decoded = Jason.decode!(encoded)
       assert decoded["success"] == false
       assert decoded["error"]["code"] == "transaction:insufficient_funds"
       assert "The specified wallet" <> _ = decoded["error"]["description"]

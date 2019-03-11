@@ -16,7 +16,6 @@ defmodule EWalletAPI.V1.StatusControllerTest do
   # async: false due to `Application.put_env/3` for sentry reporting
   use EWalletAPI.ConnCase, async: false
   alias Plug.Conn
-  alias Poison.Parser
 
   describe "/status" do
     test "returns success" do
@@ -48,7 +47,7 @@ defmodule EWalletAPI.V1.StatusControllerTest do
         end)
 
       assert status == 500
-      assert Parser.parse!(response) == expected
+      assert Jason.decode!(response) == expected
     end
 
     test "sends a report to sentry" do

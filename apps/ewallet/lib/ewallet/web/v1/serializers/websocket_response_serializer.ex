@@ -63,7 +63,7 @@ defmodule EWallet.Web.V1.WebsocketResponseSerializer do
   Decodes JSON String into `Phoenix.Socket.Message` struct.
   """
   def decode!(message, _opts) do
-    decoded = Poison.decode!(message)
+    decoded = Jason.decode!(message)
 
     case decoded do
       %{} = decoded ->
@@ -124,7 +124,8 @@ defmodule EWallet.Web.V1.WebsocketResponseSerializer do
       success: msg.status == :ok
     }
     |> serialize()
-    |> Poison.encode_to_iodata!()
+    |> Jason.encode!()
+    |> IO.iodata_to_binary
   end
 
   defp build_error(nil), do: nil

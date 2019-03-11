@@ -125,7 +125,7 @@ defmodule EWallet.Web.V1.WebsocketResponseSerializer do
     }
     |> serialize()
     |> Jason.encode!()
-    |> IO.iodata_to_binary
+    |> IO.iodata_to_binary()
   end
 
   defp build_error(nil), do: nil
